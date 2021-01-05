@@ -13,6 +13,8 @@ environment:
 ...
 ```
 
+### Which versions / tags of the official Nextcloud images does it support?
+All. The script looks for the `apache2` binary and launches it if it's found. Otherwise falls back to `php-fpm`. Should you be using any unofficial image (like linuxhomeserver) it'll still work just make sure you fix the commandlet in `alternative.sh` to use the appropriate launch sequence
 
 ### How does it work?
 It appends your chosen domains to the `allowedFrameAncestors` list of the `/var/www/html/lib/public/AppFramework/Http/ContentSecurityPolicy.php` file. Simple `sed` + regexp, check the code in `alternative.sh`
