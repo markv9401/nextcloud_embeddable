@@ -1,0 +1,33 @@
+version: '3.2'
+services:
+  nextcloud:
+    container_name: nextcloud
+    image: nextcloud
+    restart: always
+    volumes:
+      - ./nextcloud/alternative.sh:/alternative.sh
+      - /etc/localtime:/etc/localtime:ro
+      - ./nextcloud/data:/var/www/html
+    ports:
+      - 80:80
+    environment:
+      - FRAME_ANCESTOR=example.org
+    command: /bin/sh /alternative.sh
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mariadb/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=SecureAsF&#*
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=EvenMoreSecure
+      - MYSQL_DATABASE=nextcloud
+
+networks:
+  default:
+    driver: bridge
+    name: net_nextcloud
